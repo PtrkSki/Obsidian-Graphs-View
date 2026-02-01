@@ -6,3 +6,70 @@ available in the app when your plugin is enabled.
 If your plugin does not need CSS, delete this file.
 
 */
+
+.bases-graph-view-container {
+	width: 100%;
+	height: 100%;
+	min-height: 300px;
+	display: flex;
+	flex-direction: column;
+	padding: var(--size-4-2);
+}
+
+.bases-graph-canvas {
+	flex: 1;
+	width: 100%;
+	min-height: 250px;
+}
+
+.bases-graph-message {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	min-height: 200px;
+	color: var(--text-muted);
+	font-style: italic;
+}
+
+.bases-graph-chart-wrapper {
+	flex: 1;
+	width: 100%;
+	min-height: 200px;
+	position: relative;
+}
+
+.bases-graph-chart-wrapper .bases-graph-canvas {
+	min-height: 200px;
+}
+
+.bases-graph-custom-labels {
+	position: relative;
+	width: 100%;
+	min-height: 100px;
+	flex-shrink: 0;
+	box-sizing: border-box;
+	margin-top: 8px;
+	overflow: visible;
+}
+
+.bases-graph-label {
+	position: absolute;
+	top: 0;
+	white-space: nowrap;
+	font-size: var(--font-ui-small);
+	color: var(--text-normal);
+	transform: translateX(-100%) rotate(-45deg);
+	transform-origin: right top;
+}
+
+.bases-graph-label .internal-link {
+	color: var(--link-color);
+	text-decoration: var(--link-decoration);
+	cursor: pointer;
+}
+
+.bases-graph-label .internal-link:hover {
+	color: var(--link-color-hover);
+	text-decoration: var(--link-decoration-hover);
+}
