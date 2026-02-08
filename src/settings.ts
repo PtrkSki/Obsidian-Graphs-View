@@ -1,18 +1,18 @@
 import {App, PluginSettingTab, Setting} from "obsidian";
-import MyPlugin from "./main";
+import GraphsViewPlugin from "./main";
 
-export interface MyPluginSettings {
+export interface GraphsViewSettings {
 	mySetting: string;
 }
 
-export const DEFAULT_SETTINGS: MyPluginSettings = {
+export const DEFAULT_SETTINGS: GraphsViewSettings = {
 	mySetting: 'default'
 }
 
-export class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+export class GraphsViewSettingTab extends PluginSettingTab {
+	plugin: GraphsViewPlugin;
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: GraphsViewPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}
