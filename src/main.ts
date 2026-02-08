@@ -1,15 +1,15 @@
 import { Plugin } from "obsidian";
-import { GraphBasesView, GraphViewType } from "./views/graph-view";
+import { LineChartBasesView, LineChartViewType } from "./views/line-chart-view";
 
 export default class GraphsViewPlugin extends Plugin {
 	async onload() {
-		// Register the Graph view for displaying data as line charts
+		// Register the line chart view for displaying data as line charts
 		// Y-axis properties are determined by the selected properties in the Properties panel
-		this.registerBasesView(GraphViewType, {
-			name: "Line Graph",
+		this.registerBasesView(LineChartViewType, {
+			name: "Line Chart",
 			icon: "lucide-line-chart",
 			factory: (controller, containerEl) =>
-				new GraphBasesView(controller, containerEl),
+				new LineChartBasesView(controller, containerEl),
 			options: () => [
 				{
 					type: "property",

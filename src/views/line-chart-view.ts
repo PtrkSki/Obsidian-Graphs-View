@@ -1,4 +1,6 @@
 import {
+	type App,
+	type BasesEntry,
 	BasesView,
 	Keymap,
 	parsePropertyId,
@@ -31,7 +33,7 @@ Chart.register(
 	Filler
 );
 
-export const GraphViewType = "graph-view";
+export const LineChartViewType = "line-chart-view";
 
 // Predefined colors for multiple lines
 const LINE_COLORS = [
@@ -48,8 +50,7 @@ const LINE_COLORS = [
 interface DataPoint {
 	label: string;
 	values: Map<string, number | null>;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	entry: any | null;
+	entry: BasesEntry | null;
 	linkPath?: string | null;
 }
 
@@ -87,8 +88,8 @@ function aggregate(values: number[], method: AggregationMethod): number | null {
 	}
 }
 
-export class GraphBasesView extends BasesView {
-	readonly type = GraphViewType;
+export class LineChartBasesView extends BasesView {
+	readonly type = LineChartViewType;
 	private containerEl: HTMLElement;
 	private canvasEl: HTMLCanvasElement | null = null;
 	private chart: Chart | null = null;
@@ -98,7 +99,7 @@ export class GraphBasesView extends BasesView {
 
 	constructor(controller: QueryController, parentEl: HTMLElement) {
 		super(controller);
-		this.containerEl = parentEl.createDiv("bases-graph-view-container");
+		this.containerEl = parentEl.createDiv("bases-line-chart-view-container");
 	}
 
 	public onDataUpdated(): void {
@@ -222,16 +223,16 @@ export class GraphBasesView extends BasesView {
 		const hasLinks = dataPoints.some((dp) => dp.linkPath || dp.entry);
 
 		// Create chart wrapper for proper layout
-		const chartWrapper = this.containerEl.createDiv("bases-graph-chart-wrapper");
+		const chartWrapper = this.containerEl.createDiv("bases-line-chart-wrapper");
 
 		// Create canvas element using containerEl.doc for pop-out window support
 		this.canvasEl = this.containerEl.doc.createElement("canvas");
-		this.canvasEl.addClass("bases-graph-canvas");
+		this.canvasEl.addClass("bases-line-chart-canvas");
 		chartWrapper.appendChild(this.canvasEl);
 
 		// Create custom labels container if we have links
 		if (hasLinks) {
-			this.customLabelsEl = this.containerEl.createDiv("bases-graph-custom-labels");
+			this.customLabelsEl = this.containerEl.createDiv("bases-line-chart-custom-labels");
 		}
 
 		// Destroy existing chart before creating new one
@@ -367,8 +368,7 @@ export class GraphBasesView extends BasesView {
 		}
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	private renderCustomLabels(dataPoints: DataPoint[], app: any): void {
+	private renderCustomLabels(dataPoints: DataPoint[], app: App): void {
 		if (!this.chart || !this.customLabelsEl || !this.canvasEl) return;
 
 		// Clear existing labels
@@ -386,7 +386,7 @@ export class GraphBasesView extends BasesView {
 		dataPoints.forEach((dp, index) => {
 			const xPos = xScale.getPixelForValue(index);
 
-			const labelEl = this.customLabelsEl!.createDiv("bases-graph-label");
+			const labelEl = this.customLabelsEl!.createDiv("bases-line-chart-label");
 			// Position relative to container, accounting for canvas offset
 			labelEl.style.left = `${canvasOffsetLeft + xPos}px`;
 
@@ -446,7 +446,7 @@ export class GraphBasesView extends BasesView {
 	}
 
 	private showMessage(message: string): void {
-		const messageEl = this.containerEl.createDiv("bases-graph-message");
+		const messageEl = this.containerEl.createDiv("bases-line-chart-message");
 		messageEl.setText(message);
 	}
 
